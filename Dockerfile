@@ -36,4 +36,14 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && rm -rf /var/lib/apt/lists/*
 
 
-CMD ["R"]
+#CMD ["R"]
+
+RUN install2.r plumber
+RUN install2.r RJDBC
+RUN install2.r rJava
+RUN install2.r DBI
+RUN install2.r dplyr
+
+EXPOSE 8000
+ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(commandArgs()[4]); pr$run(host='0.0.0.0', port=8000)"]
+CMD ["/usr/local/lib/R/site-library/plumber/examples/04-mean-sum/plumber.R"]
