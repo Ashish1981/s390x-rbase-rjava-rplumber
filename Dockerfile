@@ -11,8 +11,8 @@ ENV R_VERSION=${R_VERSION:-4.0.0} \
     TERM=xterm
 ## Add a library directory (for user-installed packages)
 RUN mkdir -p /usr/local/lib/R/site-library \
-    && chown root:staff /usr/local/lib/R/site-library \
-    && chmod g+ws /usr/local/lib/R/site-library \
+    # && chown root:staff /usr/local/lib/R/site-library \
+    # && chmod g+ws /usr/local/lib/R/site-library \
     ## Fix library path
     && sed -i '/^R_LIBS_USER=.*$/d' /usr/local/lib/R/etc/Renviron \
     && echo "R_LIBS_USER=\${R_LIBS_USER-'/usr/local/lib/R/site-library'}" >> /usr/local/lib/R/etc/Renviron \
