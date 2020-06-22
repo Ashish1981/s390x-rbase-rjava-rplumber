@@ -24,25 +24,26 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
     && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$CRAN')" \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
     ## Clean up from R source install
     && cd / \
     && rm -rf /tmp/* \
-    && apt-get remove --purge -y $BUILDDEPS \
-    && apt-get autoremove -y \
-    && apt-get autoclean -y \
+    # && apt-get remove --purge -y $BUILDDEPS \
+    # && apt-get autoremove -y \
+    # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
 
 
 #CMD ["R"]
 
-RUN install2.r plumber
-RUN install2.r RJDBC
-RUN install2.r rJava
-RUN install2.r DBI
-RUN install2.r dplyr
+# RUN install2.r plumber
+# RUN install2.r RJDBC
+# RUN install2.r rJava
+# RUN install2.r DBI
+# RUN install2.r dplyr
 
 EXPOSE 8000
 ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(commandArgs()[4]); pr$run(host='0.0.0.0', port=8000)"]
