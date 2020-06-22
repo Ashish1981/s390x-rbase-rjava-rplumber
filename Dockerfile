@@ -15,7 +15,7 @@ ENV LANG en_US.UTF-8
 
 ## Now install R and littler, and create a link for littler in /usr/local/bin
 RUN apt-get update \
-    && apt-get install -t unstable -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
     gcc-9-base \
     libopenblas0-pthread \
     littler \
