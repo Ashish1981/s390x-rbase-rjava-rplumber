@@ -20,9 +20,6 @@ RUN apt-get update \
     libopenblas0-pthread \
     littler \
     r-cran-littler \
-    r-base=${R_BASE_VERSION}-* \
-    r-base-dev=${R_BASE_VERSION}-* \
-    r-recommended=${R_BASE_VERSION}-* \
     && ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \
     && ln -s /usr/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
     && ln -s /usr/lib/R/site-library/littler/examples/installBioc.r /usr/local/bin/installBioc.r \
