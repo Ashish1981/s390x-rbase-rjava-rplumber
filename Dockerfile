@@ -1,32 +1,39 @@
 FROM docker.io/ashish1981/s390x-ubuntu-r-base
-ENV R_BASE_VERSION 4.0.2
 
-## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-    && locale-gen en_US.utf8 \
-    && /usr/sbin/update-locale LANG=en_US.UTF-8
-
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-# ## Use Debian unstable via pinning -- new style via APT::Default-Release
-# RUN echo "deb http://http.debian.net/debian sid main" > /etc/apt/sources.list.d/debian-unstable.list \
-#     && echo 'APT::Default-Release "testing";' > /etc/apt/apt.conf.d/default
-
-## Now install R and littler, and create a link for littler in /usr/local/bin
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    gcc-9-base \
-    libopenblas0-pthread \
-    littler \
-    r-cran-littler \
-    && ln -s /usr/lib/R/site-library/littler/examples/install.r /usr/local/bin/install.r \
-    && ln -s /usr/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    && ln -s /usr/lib/R/site-library/littler/examples/installBioc.r /usr/local/bin/installBioc.r \
-    && ln -s /usr/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    && ln -s /usr/lib/R/site-library/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r \
-    && install.r docopt \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
+ARG R_VERSION
+ARG BUILD_DATE
+ARG CRAN
+ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
+ENV R_VERSION=${R_VERSION:-4.0.0} \
+    CRAN=${CRAN:-https://cran.rstudio.com} \ 
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    TERM=xterm
+## Add a library directory (for user-installed packages)
+RUN mkdir -p /usr/local/lib/R/site-library \
+    && chown root:staff /usr/local/lib/R/site-library \
+    && chmod g+ws /usr/local/lib/R/site-library \
+    ## Fix library path
+    && sed -i '/^R_LIBS_USER=.*$/d' /usr/local/lib/R/etc/Renviron \
+    && echo "R_LIBS_USER=\${R_LIBS_USER-'/usr/local/lib/R/site-library'}" >> /usr/local/lib/R/etc/Renviron \
+    && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /usr/local/lib/R/etc/Renviron \
+    ## Set configured CRAN mirror
+    && if [ -z "$BUILD_DATE" ]; then MRAN=$CRAN; \
+    else MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE}; fi \
+    && echo MRAN=$MRAN >> /etc/environment \
+    && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
+    ## Use littler installation scripts
+    && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$CRAN')" \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    ## Clean up from R source install
+    && cd / \
+    && rm -rf /tmp/* \
+    && apt-get remove --purge -y $BUILDDEPS \
+    && apt-get autoremove -y \
+    && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
+
 
 CMD ["R"]
