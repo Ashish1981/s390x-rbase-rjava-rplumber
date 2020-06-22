@@ -5,12 +5,13 @@ RUN apt-get update -qq && apt-get install -y \
     libssl-dev \
     libcurl4-gnutls-dev
 
-RUN install2.r plumber
-RUN install2.r RJDBC
-RUN install2.r rJava
-RUN install2.r DBI
-RUN install2.r dplyr
-RUN updateR() 
+RUN R -e 'install.packages(c("devtools"))'
+RUN R -e 'install.packages(c("plumber"))'
+RUN R -e 'install.packages(c("RJDBC"))'
+RUN R -e 'install.packages(c("rJava"))'
+RUN R -e 'install.packages(c("DBI"))'
+RUN R -e 'install.packages(c("dplyr"))'
+RUN R -e 'updateR() '
 
 
 RUN echo "sessionInfo()" | R --save
