@@ -9,6 +9,67 @@ ENV R_VERSION=${R_VERSION:-3.6.3} \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TERM=xterm
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    bash-completion \
+    ca-certificates \
+    file \
+    fonts-texgyre \
+    g++ \
+    gfortran \
+    gsfonts \
+    libblas-dev \
+    libbz2-1.0 \
+    libcurl4 \
+    libicu63 \
+    libjpeg62-turbo \
+    libopenblas-dev \
+    libpangocairo-1.0-0 \
+    libpcre3 \
+    libpng16-16 \
+    libreadline7 \
+    libtiff5 \
+    liblzma5 \
+    locales \
+    make \
+    unzip \
+    zip \
+    zlib1g \
+    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen en_US.utf8 \
+    && /usr/sbin/update-locale LANG=en_US.UTF-8 \
+    && BUILDDEPS="curl \
+    default-jdk \
+    libbz2-dev \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libicu-dev \
+    libpcre3-dev \
+    libpng-dev \
+    libreadline-dev \
+    libtiff5-dev \
+    liblzma-dev \
+    libx11-dev \
+    libxt-dev \
+    perl \
+    tcl8.6-dev \
+    tk8.6-dev \
+    texinfo \
+    texlive-extra-utils \
+    texlive-fonts-recommended \
+    texlive-fonts-extra \
+    texlive-latex-recommended \
+    x11proto-core-dev \
+    xauth \
+    xfonts-base \
+    xvfb \
+    zlib1g-dev" \
+    && apt-get install -y --no-install-recommends $BUILDDEPS
+
+
 ## Add a library directory (for user-installed packages)
 RUN mkdir -p /usr/local/lib/R/site-library \
     # && chown root:staff /usr/local/lib/R/site-library \
