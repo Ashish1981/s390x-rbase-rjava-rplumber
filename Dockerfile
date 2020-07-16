@@ -4,7 +4,7 @@ ARG R_VERSION
 ARG BUILD_DATE
 ARG CRAN
 ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
-ENV R_VERSION=${R_VERSION:-4.0.0} \
+ENV R_VERSION=${R_VERSION:-3.6.3} \
     CRAN=${CRAN:-https://cran.rstudio.com} \ 
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
@@ -12,7 +12,7 @@ ENV R_VERSION=${R_VERSION:-4.0.0} \
 ## Add a library directory (for user-installed packages)
 RUN mkdir -p /usr/local/lib/R/site-library \
     # && chown root:staff /usr/local/lib/R/site-library \
-    # && chmod g+ws /usr/local/lib/R/site-library \
+    && chmod g+ws /usr/local/lib/R/site-library \
     ## Fix library path
     && sed -i '/^R_LIBS_USER=.*$/d' /usr/local/lib/R/etc/Renviron \
     && echo "R_LIBS_USER=\${R_LIBS_USER-'/usr/local/lib/R/site-library'}" >> /usr/local/lib/R/etc/Renviron \
@@ -24,11 +24,11 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
     && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$CRAN')" \
-    && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
-    # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
-    ## Clean up from R source install
+    # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    # Clean up from R source install
     && cd / \
     && rm -rf /tmp/* \
     # && apt-get remove --purge -y $BUILDDEPS \
@@ -44,7 +44,3 @@ RUN mkdir -p /usr/local/lib/R/site-library \
 # RUN install2.r rJava
 # RUN install2.r DBI
 # RUN install2.r dplyr
-
-EXPOSE 8000
-ENTRYPOINT ["R", "-e", "pr <- plumber::plumb(commandArgs()[4]); pr$run(host='0.0.0.0', port=8000)"]
-CMD ["/usr/local/lib/R/site-library/plumber/examples/04-mean-sum/plumber.R"]
