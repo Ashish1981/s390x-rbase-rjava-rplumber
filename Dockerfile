@@ -68,7 +68,7 @@ RUN apt-get update \
     xfonts-base \
     xvfb \
     zlib1g-dev" \
-    && apt-get install -y --no-install-recommends $BUILDDEPS \
+    && apt-get install -y  $BUILDDEPS \
     && R CMD javareconf  
 
 
