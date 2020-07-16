@@ -22,7 +22,7 @@ RUN apt-get update \
     libblas-dev \
     libbz2-1.0 \
     libcurl4 \
-    libicu63 \
+    # libicu63 \
     # libjpeg62-turbo \
     libopenblas-dev \
     libpangocairo-1.0-0 \
@@ -40,7 +40,6 @@ RUN apt-get update \
     && locale-gen en_US.utf8 \
     && /usr/sbin/update-locale LANG=en_US.UTF-8 \
     && BUILDDEPS="curl \
-    # default-jdk \
     libbz2-dev \
     libcairo2-dev \
     libcurl4-openssl-dev \
@@ -84,11 +83,12 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo MRAN=$MRAN >> /etc/environment \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
-    && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$CRAN')" \
-    # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    && Rscript -e "install.packages(c('docopt'), repo = '$CRAN')" \
+    # && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$CRAN')" \
+    # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
     # Clean up from R source install
     && cd / \
     && rm -rf /tmp/* \
@@ -96,8 +96,12 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     # && apt-get autoremove -y \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
-
-
+RUN Rscript -e "install.packages(c('rJava'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('plumber'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('RJDBC'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('DBI',), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('dplyr'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('shiny'), repo = '$CRAN')"
 #CMD ["R"]
 
 # RUN install2.r plumber
