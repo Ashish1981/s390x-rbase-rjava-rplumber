@@ -9,7 +9,7 @@ ENV R_VERSION=${R_VERSION:-3.6.3} \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TERM=xterm
-
+USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     bash-completion \
