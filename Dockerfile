@@ -22,7 +22,7 @@ RUN apt-get update \
     libblas-dev \
     libbz2-1.0 \
     libcurl4 \
-    # libicu63 \
+    libicu63 \
     # libjpeg62-turbo \
     libopenblas-dev \
     libpangocairo-1.0-0 \
@@ -40,7 +40,7 @@ RUN apt-get update \
     && locale-gen en_US.utf8 \
     && /usr/sbin/update-locale LANG=en_US.UTF-8 \
     && BUILDDEPS="curl \
-    default-jdk \
+    # default-jdk \
     libbz2-dev \
     libcairo2-dev \
     libcurl4-openssl-dev \
