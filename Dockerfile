@@ -11,7 +11,8 @@ ENV R_VERSION=${R_VERSION:-3.6.3} \
     TERM=xterm
 USER root
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install -y  \
+    sudo \
     bash-completion \
     ca-certificates \
     file \
@@ -71,6 +72,38 @@ RUN apt-get update \
     && apt-get install -y  $BUILDDEPS \
     && R CMD javareconf  
 
+RUN apt-get update && apt-get install -y \
+    apt-utils
+
+RUN apt-get update && apt-get install -y \
+    sudo \
+    gdebi-core \
+    pandoc \
+    pandoc-citeproc \
+    libcurl4-gnutls-dev \
+    libcairo2-dev \
+    libxt-dev \
+    xtail \
+    wget 
+
+RUN apt-get update && apt-get install -y \
+    liblzma-dev \
+    libbz2-dev \
+    clang  \
+    ccache 
+
+RUN apt-get update && apt-get install -y \
+    default-jdk \
+    default-jre \
+    && sudo R CMD javareconf   
+
+RUN apt-get update && apt-get install -y \
+    supervisor \
+    git-core \
+    libsodium-dev \
+    libssl-dev \
+    libcurl4-gnutls-dev \
+    xtail 
 
 ## Add a library directory (for user-installed packages)
 RUN mkdir -p /usr/local/lib/R/site-library \
