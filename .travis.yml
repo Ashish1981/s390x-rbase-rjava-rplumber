@@ -1,6 +1,4 @@
 arch: s390x
-services:
-  - docker
 #
 script: "echo 'Building Docker image with tags'"  
 #
