@@ -40,6 +40,8 @@ RUN apt-get update \
     && locale-gen en_US.utf8 \
     && /usr/sbin/update-locale LANG=en_US.UTF-8 \
     && BUILDDEPS="curl \
+    default-jdk \
+    default-jre \
     libbz2-dev \
     libcairo2-dev \
     libcurl4-openssl-dev \
@@ -66,7 +68,8 @@ RUN apt-get update \
     xfonts-base \
     xvfb \
     zlib1g-dev" \
-    && apt-get install -y --no-install-recommends $BUILDDEPS
+    && apt-get install -y --no-install-recommends $BUILDDEPS \
+    && R CMD javareconf  
 
 
 ## Add a library directory (for user-installed packages)
