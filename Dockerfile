@@ -95,6 +95,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     default-jdk \
     default-jre \
+    && unset JAVA_HOME \
     && sudo R CMD javareconf   
 
 RUN apt-get update && apt-get install -y \
@@ -132,7 +133,7 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     # && apt-get autoremove -y \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
-RUN unset JAVA_HOME
+ 
 RUN Rscript -e "install.packages(c('rJava'), repo = '$CRAN')"
 RUN Rscript -e "install.packages(c('plumber'), repo = '$CRAN')"
 RUN Rscript -e "install.packages(c('RJDBC'), repo = '$CRAN')"
