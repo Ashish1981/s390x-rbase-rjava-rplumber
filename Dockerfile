@@ -11,7 +11,9 @@ ENV R_VERSION=${R_VERSION:-3.6.3} \
     TERM=xterm
 
 RUN apt-get update && apt-get install -y \
-    apt-utils
+    apt-utils \
+    libxml2-dev \
+    libudunits2-dev
 
 RUN apt-get update && apt-get install -y \
     sudo \
@@ -74,7 +76,19 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     # && apt-get autoremove -y \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
- 
+
+RUN Rscript -e "install.packages(c('devtools'), dependencies = TRUE, repo = '$CRAN')"
+#
+RUN Rscript -e "install.packages(c('class'), dependencies = TRUE, repo = '$CRAN')"
+#
+RUN Rscript -e "install.packages(c('zoo'), dependencies = TRUE, repo = '$CRAN')"
+# 
+RUN Rscript -e "install.packages(c('lattice'), dependencies = TRUE, repo = '$CRAN')"
+# 
+RUN Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')"
+#
+RUN Rscript -e "install.packages(c('hexbin'), dependencies = TRUE, repo = '$CRAN')"
+# 
 RUN Rscript -e "install.packages(c('rJava'), dependencies = TRUE, repo = '$CRAN')"
 #
 RUN Rscript -e "install.packages(c('RJDBC'), dependencies = TRUE, repo = '$CRAN')"
