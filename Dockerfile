@@ -61,9 +61,9 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo MRAN=$MRAN >> /etc/environment \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
-    && Rscript -e "install.packages(c('docopt'), repo = '$CRAN')" \
-    && Rscript -e "install.packages(c('littler'), repo = '$CRAN')" \
-    # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), repo = '$CRAN')" \
+    && Rscript -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
+    && Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
+    # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
     && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
     && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
     && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
@@ -75,43 +75,43 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
  
-RUN Rscript -e "install.packages(c('rJava'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('rJava'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('RJDBC'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('RJDBC'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('shiny'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('shiny'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('shinydashboard'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('shinydashboard'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('curl'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('curl'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('httr'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('httr'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('jsonlite'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('jsonlite'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('DT'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('DT'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('shinyalert'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('shinyalert'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('stringr'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('stringr'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('dplyr'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('dplyr'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('plotly'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('plotly'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('rmarkdown'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('rmarkdown'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('leaflet'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('leaflet'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('htmlwidgets'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('htmlwidgets'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('data.table'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('data.table'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('shinyjs'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('shinyjs'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('DBI'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('DBI'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('DBI'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('DBI'), dependencies = TRUE, repo = '$CRAN')"
 #
-RUN Rscript -e "install.packages(c('plumber'), repo = '$CRAN')"
+RUN Rscript -e "install.packages(c('plumber'), dependencies = TRUE, repo = '$CRAN')"
 #
