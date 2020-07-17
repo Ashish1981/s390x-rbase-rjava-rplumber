@@ -28,7 +28,9 @@ RUN apt-get update && apt-get install -y \
     liblzma-dev \
     libbz2-dev \
     clang  \
-    ccache 
+    ccache  \
+    libz-devel \
+    libpcre
 
 RUN apt-get update && apt-get install -y \
     default-jdk \
