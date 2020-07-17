@@ -132,6 +132,7 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     # && apt-get autoremove -y \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
+RUN unset JAVA_HOME
 RUN Rscript -e "install.packages(c('rJava'), repo = '$CRAN')"
 RUN Rscript -e "install.packages(c('plumber'), repo = '$CRAN')"
 RUN Rscript -e "install.packages(c('RJDBC'), repo = '$CRAN')"
