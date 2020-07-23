@@ -5,7 +5,8 @@ ARG BUILD_DATE
 ARG CRAN
 ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
 ENV R_VERSION=${R_VERSION:-3.6.3} \
-    CRAN=${CRAN:-https://cran.rstudio.com} \ 
+    # CRAN=${CRAN:-https://cran.rstudio.com} \ 
+    CRAN=${CRAN:-https://cloud.r-project.org} \ 
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TERM=xterm
@@ -47,7 +48,10 @@ RUN apt-get update && apt-get install -y \
     libsodium-dev \
     libssl-dev \
     libcurl4-gnutls-dev \
-    xtail 
+    xtail && \
+    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-s390x && \
+    export PATH=$JAVA_HOME/bin/:$PATH && \
+    setarch s390x R CMD javareconf
 
 ## Add a library directory (for user-installed packages)
 RUN mkdir -p /usr/local/lib/R/site-library \
@@ -64,11 +68,11 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
     && Rscript -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
-    && Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
-    # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    # && Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
+    # # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
     # Clean up from R source install
     && cd / \
     && rm -rf /tmp/* \
