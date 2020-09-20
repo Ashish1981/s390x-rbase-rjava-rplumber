@@ -11,12 +11,14 @@ ENV R_VERSION=${R_VERSION:-3.6.3} \
     LANG=en_US.UTF-8 \
     TERM=xterm
 
-RUN apt-get update && apt-get install -y \
+USER shiny
+
+RUN sudo apt-get update && apt-get install -y \
     apt-utils \
     libxml2-dev \
     libudunits2-dev
 
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && apt-get install -y \
     sudo \
     gdebi-core \
     pandoc \
@@ -27,7 +29,7 @@ RUN apt-get update && apt-get install -y \
     xtail \
     wget 
 
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && apt-get install -y \
     liblzma-dev \
     libbz2-dev \
     clang  \
@@ -42,7 +44,7 @@ RUN apt-get update && apt-get install -y \
 #     && unset JAVA_HOME \
 #     && sudo R CMD javareconf   
 
-RUN apt-get update && apt-get install -y \
+RUN sudo apt-get update && apt-get install -y \
     supervisor \
     git-core \
     libsodium-dev \
