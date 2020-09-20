@@ -54,15 +54,15 @@ RUN apt-get update && apt-get install -y \
     setarch s390x R CMD javareconf
 
 ## Add a library directory (for user-installed packages)
-RUN mkdir -p /usr/local/lib/R/site-library \
-    # && chown root:staff /usr/local/lib/R/site-library \
-    && chmod g+ws /usr/local/lib/R/site-library \
-    ## Fix library path
-    && sed -i '/^R_LIBS_USER=.*$/d' /usr/local/lib/R/etc/Renviron \
-    && echo "R_LIBS_USER=\${R_LIBS_USER-'/usr/local/lib/R/site-library'}" >> /usr/local/lib/R/etc/Renviron \
-    && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /usr/local/lib/R/etc/Renviron \
-    ## Set configured CRAN mirror
-    && if [ -z "$BUILD_DATE" ]; then MRAN=$CRAN; \
+# RUN mkdir -p /usr/local/lib/R/site-library \
+#     # && chown root:staff /usr/local/lib/R/site-library \
+#     && chmod g+ws /usr/local/lib/R/site-library \
+#     ## Fix library path
+#     && sed -i '/^R_LIBS_USER=.*$/d' /usr/local/lib/R/etc/Renviron \
+#     && echo "R_LIBS_USER=\${R_LIBS_USER-'/usr/local/lib/R/site-library'}" >> /usr/local/lib/R/etc/Renviron \
+#     && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /usr/local/lib/R/etc/Renviron \
+#     ## Set configured CRAN mirror
+RUN if [ -z "$BUILD_DATE" ]; then MRAN=$CRAN; \
     else MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE}; fi \
     && echo MRAN=$MRAN >> /etc/environment \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
