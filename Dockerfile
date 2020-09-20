@@ -68,11 +68,12 @@ RUN mkdir -p /usr/local/lib/R/site-library \
     && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
     && Rscript -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
-    # && Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
-    # # # && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
-    # && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    # && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    # && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+    ## Use littler installation scripts
+    && Rscript -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
+    && Rscript -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
     # Clean up from R source install
     && cd / \
     && rm -rf /tmp/* \
