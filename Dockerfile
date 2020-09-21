@@ -73,7 +73,7 @@ RUN apt-get update && apt-get install -y \
  RUN R -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
     ## Use littler installation scripts
     && R -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
-    && R -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
+    # && R -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
     && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
     && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
     && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
@@ -84,59 +84,6 @@ RUN apt-get update && apt-get install -y \
     # && apt-get autoremove -y \
     # && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/*
-
-# RUN R -e "install.packages(c('devtools'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('class'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('zoo'), dependencies = TRUE, repo = '$CRAN')"
-# # 
-# RUN R -e "install.packages(c('lattice'), dependencies = TRUE, repo = '$CRAN')"
-# # 
-# RUN R -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('hexbin'), dependencies = TRUE, repo = '$CRAN')"
-# # 
-# RUN R -e "install.packages(c('rJava'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('RJDBC'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('shiny'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('shinydashboard'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('curl'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('httr'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('jsonlite'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('DT'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('shinyalert'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('stringr'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('dplyr'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('plotly'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('rmarkdown'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('leaflet'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('htmlwidgets'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('data.table'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('shinyjs'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('DBI'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('DBI'), dependencies = TRUE, repo = '$CRAN')"
-# #
-# RUN R -e "install.packages(c('plumber'), dependencies = TRUE, repo = '$CRAN')"
-# #
 # Download and install R modules
 
 RUN install2.r  rJava
