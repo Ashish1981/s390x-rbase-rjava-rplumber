@@ -1,4 +1,4 @@
-FROM docker.io/ashish1981/s390x-ubuntu-r-base:master-20201023-131808-69
+FROM docker.io/ashish1981/s390x-ubuntu-r-base:master-20201023-151448-76
 
 ARG R_VERSION
 ARG BUILD_DATE
