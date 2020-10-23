@@ -1,10 +1,10 @@
-FROM docker.io/ashish1981/s390x-ubuntu-r-base
+FROM docker.io/ashish1981/s390x-ubuntu-r-base:master-20201023-131808-69
 
 ARG R_VERSION
 ARG BUILD_DATE
 ARG CRAN
 ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
-ENV R_VERSION=${R_VERSION:-3.6.3} \
+ENV R_VERSION=${R_VERSION:-4.0.2} \
     # CRAN=${CRAN:-https://cran.rstudio.com} \ 
     CRAN=${CRAN:-https://cloud.r-project.org} \ 
     LC_ALL=en_US.UTF-8 \
