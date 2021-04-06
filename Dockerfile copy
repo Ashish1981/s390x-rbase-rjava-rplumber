@@ -1,10 +1,10 @@
-#FROM docker.io/ashish1981/s390x-ubuntu-r-base:master-20201023-151448-76
-FROM docker.io/ashish1981/r-ver:test
+FROM docker.io/ashish1981/s390x-ubuntu-r-base:master-20201023-151448-76
+
 ARG R_VERSION
 ARG BUILD_DATE
 ARG CRAN
 ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
-ENV R_VERSION=${R_VERSION:-3.6.3} \
+ENV R_VERSION=${R_VERSION:-4.0.2} \
     # CRAN=${CRAN:-https://cran.rstudio.com} \ 
     CRAN=${CRAN:-https://cloud.r-project.org} \ 
     LC_ALL=en_US.UTF-8 \
@@ -36,11 +36,11 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev 
    
 
-RUN apt-get update && apt-get install -y \
-    default-jdk \
-    default-jre \
-    && unset JAVA_HOME \
-    && sudo R CMD javareconf   
+# RUN apt-get update && apt-get install -y \
+#     default-jdk \
+#     default-jre \
+#     && unset JAVA_HOME \
+#     && sudo R CMD javareconf   
 
 RUN apt-get update && apt-get install -y \
     supervisor \
