@@ -70,21 +70,21 @@ RUN apt-get update && apt-get install -y \
     # && echo MRAN=$MRAN >> /etc/environment \
     # && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
     ## Use littler installation scripts
- RUN R -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
-    ## Use littler installation scripts
-    && R -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
-    # && R -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-    && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-    && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
-    # Clean up from R source install
-    && cd / \
-    && rm -rf /tmp/* \
-    # && apt-get remove --purge -y $BUILDDEPS \
-    # && apt-get autoremove -y \
-    # && apt-get autoclean -y \
-    && rm -rf /var/lib/apt/lists/*
-# Download and install R modules
+#  RUN R -e "install.packages(c('docopt'), dependencies = TRUE, repo = '$CRAN')" \
+#     ## Use littler installation scripts
+#     && R -e "install.packages(c('littler'), dependencies = TRUE, repo = '$CRAN')" \
+#     # && R -e "install.packages(c('plumber', 'RJDBC', 'rJava', 'DBI', 'dplyr'), dependencies = TRUE, repo = '$CRAN')" \
+#     && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
+#     && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
+#     && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
+#     # Clean up from R source install
+#     && cd / \
+#     && rm -rf /tmp/* \
+#     # && apt-get remove --purge -y $BUILDDEPS \
+#     # && apt-get autoremove -y \
+#     # && apt-get autoclean -y \
+#     && rm -rf /var/lib/apt/lists/*
+# # Download and install R modules
 
 RUN install2.r  rJava
 RUN install2.r  RJDBC
