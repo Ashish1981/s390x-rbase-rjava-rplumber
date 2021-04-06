@@ -4,6 +4,8 @@ ARG R_VERSION
 ARG BUILD_DATE
 ARG CRAN
 ENV BUILD_DATE ${BUILD_DATE:-2020-04-24}
+ENV LD_LIBRARY_PATH=/usr/lib/jvm/default-java/lib/server:/usr/lib/jvm/default-java
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-s390x
 ENV R_VERSION=${R_VERSION:-3.6.3} \
     # CRAN=${CRAN:-https://cran.rstudio.com} \ 
     CRAN=${CRAN:-https://cloud.r-project.org} \ 
@@ -37,8 +39,8 @@ RUN apt-get update && apt-get install -y \
    
 
 RUN apt-get update && apt-get install -y \
-    default-jdk \
-    default-jre \
+    openjdk-11-jdk \
+    openjdk-11-jre \
     && unset JAVA_HOME \
     && sudo R CMD javareconf   
 
@@ -54,6 +56,7 @@ RUN apt-get update && apt-get install -y \
     xtail && \
     export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-s390x && \
     export PATH=$JAVA_HOME/bin/:$PATH && \
+    export LD_LIBRARY_PATH=/usr/lib/jvm/default-java/lib/server:/usr/lib/jvm/default-java && \
     setarch s390x R CMD javareconf
 
 ## Add a library directory (for user-installed packages)
@@ -108,3 +111,7 @@ RUN install2.r  plumber
 RUN install2.r  data.table
 RUN install2.r  gmailr
 RUN install2.r  pander
+
+COPY /shiny-server-1.5.17.0-s390x.deb /tmp/shiny-server-1.5.17.0-s390x.deb
+
+RUN dkpg -i /tmp/shiny-server-1.5.17.0-s390x.deb
