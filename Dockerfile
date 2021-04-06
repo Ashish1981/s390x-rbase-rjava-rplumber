@@ -93,6 +93,8 @@ RUN install2.r  rJava
 RUN install2.r  RJDBC
 RUN install2.r  shiny
 RUN install2.r  shinydashboard
+COPY /shiny-server-1.5.17.0-s390x.deb /tmp/shiny-server-1.5.17.0-s390x.deb
+RUN dpkg -i /tmp/shiny-server-1.5.17.0-s390x.deb
 RUN install2.r  curl
 RUN install2.r  httr
 RUN install2.r  jsonlite
@@ -112,6 +114,6 @@ RUN install2.r  data.table
 RUN install2.r  gmailr
 RUN install2.r  pander
 
-COPY /shiny-server-1.5.17.0-s390x.deb /tmp/shiny-server-1.5.17.0-s390x.deb
-
-RUN dkpg -i /tmp/shiny-server-1.5.17.0-s390x.deb
+RUN rm -rf /tmp/* \
+    && apt-get autoremove -y \
+    && apt-get autoclean -y 
