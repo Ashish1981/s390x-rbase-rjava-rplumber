@@ -181,27 +181,27 @@ COPY /shiny-server-1.5.17.0-s390x.deb /tmp/shiny-server-1.5.17.0-s390x.deb
 RUN dpkg -i /tmp/shiny-server-1.5.17.0-s390x.deb
 
 # RUN install2.r  shiny
-RUN install2.r --error --skipinstalled --deps rmarkdown
-RUN install2.r --error --skipinstalled --deps shinydashboard
-RUN install2.r --error --skipinstalled --deps rJava
-RUN install2.r --error --skipinstalled --deps RJDBC
-RUN install2.r --error --skipinstalled --deps curl
-RUN install2.r --error --skipinstalled --deps httr
-RUN install2.r --error --skipinstalled --deps jsonlite
-RUN install2.r --error --skipinstalled --deps DT
-RUN install2.r --error --skipinstalled --deps shinyalert
-RUN install2.r --error --skipinstalled --deps stringr
-RUN install2.r --error --skipinstalled --deps dplyr
-RUN install2.r --error --skipinstalled --deps plotly
-RUN install2.r --error --skipinstalled --deps leaflet
-RUN install2.r --error --skipinstalled --deps htmlwidgets
-RUN install2.r --error --skipinstalled --deps data.table
-RUN install2.r --error --skipinstalled --deps shinyjs
-RUN install2.r --error --skipinstalled --deps DBI
-RUN install2.r --error --skipinstalled --deps plumber
-RUN install2.r --error --skipinstalled --deps data.table
-RUN install2.r --error --skipinstalled --deps gmailr
-RUN install2.r --error --skipinstalled --deps pander
+RUN install2.r --error  rmarkdown
+RUN install2.r --error  shinydashboard
+RUN install2.r --error  rJava
+RUN install2.r --error  RJDBC
+RUN install2.r --error  curl
+RUN install2.r --error  httr
+RUN install2.r --error  jsonlite
+RUN install2.r --error  DT
+RUN install2.r --error  shinyalert
+RUN install2.r --error  stringr
+RUN install2.r --error  dplyr
+RUN install2.r --error  plotly
+RUN install2.r --error  leaflet
+RUN install2.r --error  htmlwidgets
+RUN install2.r --error  data.table
+RUN install2.r --error  shinyjs
+RUN install2.r --error  DBI
+RUN install2.r --error  plumber
+RUN install2.r --error  data.table
+RUN install2.r --error  gmailr
+RUN install2.r --error  pander
 
 RUN rm -rf /tmp/* \
     && apt-get autoremove -y \
