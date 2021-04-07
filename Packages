@@ -1,0 +1,17 @@
+Package: shiny-server
+Version: 1.5.17.0
+Architecture: s390x
+Maintainer: RStudio <info@rstudio.com>
+Installed-Size: 298162
+Depends: lsb-release, libc6 (>= 2.7)
+Recommends: r-base (>= 2.15.1)
+Filename: ./shiny-server-1.5.17.0-s390x.deb
+Size: 76386562
+MD5sum: 16610e4b9b49e487c0bb27b2653bc425
+SHA1: 3151234765f1f12b25d085ae5b320122d6b942a2
+SHA256: cef27c6247a2681e96f46e57c2302b7766b00080408069af2a2b38bcd0a6d11e
+Section: devel
+Priority: optional
+Description: Shiny Server
+ Shiny Server is a server program from RStudio, Inc. that makes Shiny applications available over the web. Shiny is a web application framework for the R statistical computation language.
+
